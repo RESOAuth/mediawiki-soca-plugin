@@ -1,0 +1,4 @@
+https://wiki.localhost:8447 {
+  tls internal
+  reverse_proxy wiki:80
+}

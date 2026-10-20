@@ -1,0 +1,7 @@
+{
+  "@metadata": {"authors": ["RESOAuth"]},
+  "soca-desc": "Single sign-on with OpenID Connect and Client ID Metadata Documents",
+  "soca": "SOCA single sign-on",
+  "right-soca-manage": "Manage SOCA settings and identity associations",
+  "action-soca-manage": "manage SOCA settings"
+}

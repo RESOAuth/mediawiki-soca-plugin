@@ -1,0 +1,24 @@
+{
+  "name": "SOCA",
+  "version": "0.1.0",
+  "author": ["RESOAuth"],
+  "url": "https://github.com/RESOAuth/mediawiki-soca-plugin",
+  "descriptionmsg": "soca-desc",
+  "license-name": "AGPL-3.0-only",
+  "type": "other",
+  "requires": {"MediaWiki": ">= 1.43.0", "extensions": {"PluggableAuth": ">= 7.0.0"}},
+  "AutoloadNamespaces": {"MediaWiki\\Extension\\SOCA\\": "src/", "RESOAuth\\Soca\\": "lib/soca/src/"},
+  "callback": "MediaWiki\\Extension\\SOCA\\Hooks::registration",
+  "Hooks": {
+    "LoadExtensionSchemaUpdates": "MediaWiki\\Extension\\SOCA\\Hooks::schema",
+    "TitleReadWhitelist": "MediaWiki\\Extension\\SOCA\\Hooks::readWhitelist"
+  },
+  "SpecialPages": {"SOCA": "MediaWiki\\Extension\\SOCA\\SpecialSOCA"},
+  "MessagesDirs": {"SOCA": ["i18n"]},
+  "ExtensionMessagesFiles": {"SOCAAliases": "i18n/aliases.php"},
+  "AvailableRights": ["soca-manage"],
+  "GroupPermissions": {"sysop": {"soca-manage": true}},
+  "attributes": {"PluggableAuth": {"SOCA": {"class": "MediaWiki\\Extension\\SOCA\\SocaPlugin"}}},
+  "config": {"SOCAConfig": {"value": {}}},
+  "manifest_version": 2
+}
