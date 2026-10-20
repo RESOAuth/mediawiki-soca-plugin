@@ -45,7 +45,7 @@ precedence, linking, recovery, TLS, upgrades and deletion. The
 
 Set `SOCA_DEMO_PASSWORD` to a strong disposable password, then run
 `podman-compose -f demo/compose.yaml up --build`. Visit
-`https://wiki.localhost:8443` and trust the demo's local Caddy CA in the browser.
+`https://wiki.localhost:8447` and trust the demo's local Caddy CA in the browser.
 Use **Admin** and the supplied password. The demo generates its key in a persistent
 runtime volume; the image contains no private key. Proxy mode publishes only public
 metadata. A real compatible provider is needed for interactive SSO.

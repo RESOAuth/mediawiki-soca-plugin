@@ -14,6 +14,6 @@ COPY demo/entrypoint.sh /usr/local/bin/soca-demo
 RUN chmod +x /usr/local/bin/soca-demo && a2disconf other-vhosts-access-log && \
     sed -i '/CustomLog/d' /etc/apache2/sites-available/000-default.conf && \
     printf '%s\n' 'LogFormat "%h %l %u %t \"%m %U %H\" %>s %b" soca_redacted' 'CustomLog /proc/self/fd/1 soca_redacted' > /etc/apache2/conf-enabled/soca-log.conf
-ENV SOCA_PRIVATE_KEY_FILE=/run/secrets/soca-private.pem SOCA_DEMO_ORIGIN=https://wiki.localhost:8443
+ENV SOCA_PRIVATE_KEY_FILE=/run/secrets/soca-private.pem SOCA_DEMO_ORIGIN=https://wiki.localhost:8447
 ENTRYPOINT ["soca-demo"]
 CMD ["apache2-foreground"]

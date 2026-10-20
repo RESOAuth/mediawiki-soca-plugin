@@ -3,9 +3,10 @@ services:
     build:
       context: ..
       dockerfile: demo/Dockerfile
+      network: host
     environment:
       SOCA_DEMO_PASSWORD: ${SOCA_DEMO_PASSWORD:?Set a strong demo administrator password}
-      SOCA_DEMO_ORIGIN: https://wiki.localhost:8443
+      SOCA_DEMO_ORIGIN: https://wiki.localhost:8447
       SOCA_METADATA_MODE: proxy
     volumes:
       - wiki-data:/var/www/data
@@ -13,7 +14,7 @@ services:
   https:
     image: docker.io/library/caddy:2.10@sha256:c3d7ee5d2b11f9dc54f947f68a734c84e9c9666c92c88a7f30b9cba5da182adb
     ports:
-      - 127.0.0.1:8443:8443
+      - 127.0.0.1:8447:8447
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
