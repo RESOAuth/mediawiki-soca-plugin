@@ -1,0 +1,10 @@
+{
+  "name": "resoauth/mediawiki-soca-plugin",
+  "description": "SOCA OpenID Connect and Client ID Metadata Documents for MediaWiki",
+  "type": "mediawiki-extension",
+  "license": "AGPL-3.0-only",
+  "require": {"php": ">=8.2", "ext-curl": "*", "ext-openssl": "*", "firebase/php-jwt": "^7.2.1"},
+  "autoload": {"psr-4": {"RESOAuth\\Soca\\": "lib/soca/src/", "MediaWiki\\Extension\\SOCA\\": "src/"}},
+  "scripts": {"test": ["php lib/soca/tests/run.php", "php tests/host.php"]},
+  "config": {"allow-plugins": false, "sort-packages": true}
+}

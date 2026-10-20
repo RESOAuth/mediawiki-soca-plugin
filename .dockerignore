@@ -1,0 +1,8 @@
+.git
+vendor
+build
+demo/data
+demo/secrets
+*.pem
+*.key
+.env

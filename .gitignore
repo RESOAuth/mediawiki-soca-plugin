@@ -1,0 +1,8 @@
+/vendor/
+/build/
+/demo/data/
+/demo/secrets/
+*.pem
+*.key
+.env
+__pycache__/
