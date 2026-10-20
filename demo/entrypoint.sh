@@ -5,6 +5,7 @@ if [ -z "${SOCA_DEMO_PASSWORD:-}" ]; then
   exit 1
 fi
 mkdir -p /var/www/data /run/secrets
+rm -f /var/www/data/soca-ready
 if [ ! -f "$SOCA_PRIVATE_KEY_FILE" ]; then
   php -r '$key = openssl_pkey_new(["private_key_type" => OPENSSL_KEYTYPE_EC, "curve_name" => "prime256v1"]); openssl_pkey_export($key, $pem); file_put_contents(getenv("SOCA_PRIVATE_KEY_FILE"), $pem);'
   chown www-data:www-data "$SOCA_PRIVATE_KEY_FILE"
