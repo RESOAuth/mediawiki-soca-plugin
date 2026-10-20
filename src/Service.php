@@ -17,11 +17,14 @@ final class Service {
     public function begin($session, bool $test, int $operator = 0): string {
         if (Configuration::emergency()) { $this->store->invalidate(); }
         Failure::require(!Configuration::emergency(), 'emergency_disabled');
+        $index = $session->get('SOCA.transactions', []); $now = time();
+        foreach ($index as $key => $started) {
+            if (!is_int($started) || $started < $now - 300) { $session->remove('SOCA.tx.' . $key); unset($index[$key]); }
+        }
+        $session->set('SOCA.transactions', $index);
+        Failure::require(count($index) < 8, 'too_many_pending_logins');
         $client = $this->configuration->client(); $config = $this->configuration->effective();
         Failure::require($test ? $operator > 0 : ($config['enabled'] && $this->store->ready($client->revision())), 'profile_not_active');
-        $index = $session->get('SOCA.transactions', []); $now = time();
-        $index = array_filter($index, static fn($started) => is_int($started) && $started >= $now - 300);
-        Failure::require(count($index) < 8, 'too_many_pending_logins');
         $login = $client->start(); $tx = $login['transaction'] + ['test' => $test, 'operator' => $operator];
         $key = hash('sha256', $login['state']); $index[$key] = $now;
         $session->setSecret('SOCA.tx.' . $key, $tx); $session->set('SOCA.transactions', $index);
@@ -35,8 +38,8 @@ final class Service {
         Failure::require(is_string($query['state'] ?? null) && (bool)preg_match('/^[A-Za-z0-9_-]{43}$/D', $query['state']), 'callback_state');
         $key = hash('sha256', $query['state']); $tx = $session->getSecret('SOCA.tx.' . $key);
         Failure::require(is_array($tx), 'transaction_not_in_browser');
-        $this->store->consume($query['state'], $this->browser($session));
         $session->remove('SOCA.tx.' . $key); $index = $session->get('SOCA.transactions', []); unset($index[$key]); $session->set('SOCA.transactions', $index);
+        $this->store->consume($query['state'], $this->browser($session));
         $client = $this->configuration->client(); $config = $this->configuration->effective();
         Failure::require($tx['test'] ? $operator > 0 && $operator === $tx['operator'] : $config['enabled'] && $this->store->ready($client->revision()), 'profile_disabled_or_operator_changed');
         $claims = $client->complete($tx, $query); Policy::assertAllowed($claims, $config);

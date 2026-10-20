@@ -27,7 +27,8 @@ final class SpecialSOCA extends SpecialPage {
                 $request->response()->header('Referrer-Policy: no-referrer');
                 $query = [];
                 foreach (['state', 'code', 'iss', 'error'] as $name) { if ($request->getVal($name) !== null) { $query[$name] = $request->getVal($name); } }
-                $test = $service->callback($request->getSession(), $query, $this->getUser()->getId());
+                $operator = $this->getUser()->isAllowed('soca-manage') ? $this->getUser()->getId() : 0;
+                $test = $service->callback($request->getSession(), $query, $operator);
                 $this->getOutput()->redirect(SpecialPage::getTitleFor($test ? 'SOCA' : 'PluggableAuthLogin')->getFullURL()); return;
             }
             $this->requireLogin();

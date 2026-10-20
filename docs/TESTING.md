@@ -7,7 +7,7 @@ The PR commit identifies the exact implementation; rerun the commands on that co
 | Verification | Actual result | Scope |
 | --- | --- | --- |
 | `composer test` | 129 core assertions plus host packaging checks pass | Signed synthetic provider, ES256/ES384/RS256, hosted and proxy, no real-provider claim. |
-| `sh tests/container.sh` | 20 native assertions and HTTP route/recovery checks pass | Official MediaWiki 1.43.11, PHP 8.3.35, PluggableAuth 7.5.0, SQLite; runtime installs schema and extension, then recreates the container using persisted configuration, database and signing key. |
+| `sh tests/container.sh` | 24 native assertions and HTTP route/recovery checks pass | Official MediaWiki 1.43.11, PHP 8.3.35, PluggableAuth 7.5.0, SQLite; runtime installs schema and extension, then recreates the container using persisted configuration, database and signing key. |
 | Public RESOAuth discovery plus Dynamic CIMD | Passed 20 October 2026 23:25 UTC, 21 October locally | Real TLS read-only document check; `client_id_metadata_document_supported` absent, provider support unconfirmed. |
 | Real RESOAuth end-user login, hosted mode | Not performed | Credentials and interactive provider consent not available. |
 | Real RESOAuth end-user login, proxy mode | Not performed | Credentials and interactive provider consent not available. |
